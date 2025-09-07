@@ -16,6 +16,8 @@
     "start": "bun run dist/server.js",
     "socket": "bun run src/socket.ts",
     "setup": "./scripts/setup.sh",
+    "setup:win": "./scripts/setup.bat",
+    "setup:ps": "powershell -ExecutionPolicy Bypass -File ./scripts/setup.ps1",
     "build": "tsup",
     "build:watch": "tsup --watch",
     "dev": "bun run build:watch",

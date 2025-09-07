@@ -46,21 +46,6 @@ Thanks to [@dusskapark](https://github.com/dusskapark) for contributing the bulk
 Another contribution from [@dusskapark](https://github.com/dusskapark)
 Propagate component instance overrides from a source instance to multiple target instances with a single command. This feature dramatically reduces repetitive design work when working with component instances that need similar customizations. Check out our [demo video](https://youtu.be/uvuT8LByroI).
 
-## Development Setup
-
-To develop, update your mcp config to direct to your local directory.
-
-```json
-{
-  "mcpServers": {
-    "TalkToFigma": {
-      "command": "bun",
-      "args": ["/path-to-repo/src/talk_to_figma_mcp/server.ts"]
-    }
-  }
-}
-```
-
 ## Manual Setup and Installation
 
 ### MCP Server: Integration with Cursor
@@ -93,26 +78,72 @@ bun socket
 3. Select the `src/cursor_mcp_plugin/manifest.json` file
 4. The plugin should now be available in your Figma development plugins
 
-## Windows + WSL Guide
+## Windows Setup Guide
 
-1. Install bun via powershell
+### Option 1: Using PowerShell (Recommended)
 
-```bash
+1. Install Bun via PowerShell:
+```powershell
 powershell -c "irm bun.sh/install.ps1|iex"
 ```
 
-2. Uncomment the hostname `0.0.0.0` in `src/socket.ts`
-
-```typescript
-// uncomment this to allow connections in windows wsl
-hostname: "0.0.0.0",
+2. Run the PowerShell setup script:
+```powershell
+bun run setup:ps
 ```
 
-3. Start the websocket
-
+3. Start the WebSocket server:
 ```bash
 bun socket
 ```
+
+### Option 2: Using Command Prompt
+
+1. Install Bun via PowerShell (run once):
+```powershell
+powershell -c "irm bun.sh/install.ps1|iex"
+```
+
+2. Run the batch setup script:
+```cmd
+bun run setup:win
+```
+
+3. Start the WebSocket server:
+```bash
+bun socket
+```
+
+### Option 3: Manual Setup
+
+1. Install Bun via PowerShell:
+```powershell
+powershell -c "irm bun.sh/install.ps1|iex"
+```
+
+2. Install dependencies:
+```bash
+bun install
+```
+
+3. Create `.cursor` directory and `mcp.json` manually:
+```json
+{
+  "mcpServers": {
+    "TalkToFigma": {
+      "command": "bunx",
+      "args": ["cursor-talk-to-figma-mcp@latest"]
+    }
+  }
+}
+```
+
+4. Start the WebSocket server:
+```bash
+bun socket
+```
+
+**Note**: The WebSocket server is now configured to work properly on Windows by default (hostname: "0.0.0.0" is enabled).
 
 ## Usage
 
@@ -133,8 +164,6 @@ The MCP server provides the following tools for interacting with Figma:
 - `read_my_design` - Get detailed node information about the current selection without parameters
 - `get_node_info` - Get detailed information about a specific node
 - `get_nodes_info` - Get detailed information about multiple nodes by providing an array of node IDs
-- `set_focus` - Set focus on a specific node by selecting it and scrolling viewport to it
-- `set_selections` - Set selection to multiple nodes and scroll viewport to show them
 
 ### Annotations
 
